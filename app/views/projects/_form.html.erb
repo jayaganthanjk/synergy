@@ -2,7 +2,6 @@
   <% if @project.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@project.errors.count, "error") %> prohibited this project from being saved:</h2>
-
       <ul>
       <% @project.errors.full_messages.each do |message| %>
         <li><%= message %></li>
@@ -20,9 +19,17 @@
     <%= f.label :start %>
     <%= f.label :end ,:class => "pull-right"%>
     <div class="input-daterange input-group">
-      <%= f.text_field :start , :class => "form-control dp-start-date", :value => Date.current.strftime("%d-%m-%Y") %>
+      <% if @project.start %>
+        <%= f.text_field :start , :class => "form-control dp-start-date", :value => @project.start.strftime("%d-%m-%Y"), :placeholder => "dd-mm-yyyy" %>
+      <% else %>
+        <%= f.text_field :start , :class => "form-control dp-start-date", :value => Date.current.strftime("%d-%m-%Y"), :placeholder => "dd-mm-yyyy" %>
+      <% end %>
       <span class="input-group-addon">to</span>
-      <%= f.text_field :end , :class => "form-control dp-end-date" %>
+      <% if @project.end %>
+        <%= f.text_field :end , :class => "form-control dp-end-date", :value => @project.end.strftime("%d-%m-%Y"), :placeholder => "dd-mm-yyyy" %>
+      <% else %>
+        <%= f.text_field :end , :class => "form-control dp-end-date", :value => Date.current.strftime("%d-%m-%Y"), :placeholder => "dd-mm-yyyy" %>
+      <% end %>
     </div>
   </div>
 
