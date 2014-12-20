@@ -29,6 +29,7 @@ class BugsController < ApplicationController
 
     respond_to do |format|
       if @bug.save
+        activity = @bug.create_activity :create, owner: current_user, recipient: Project.find(@bug.story.project_id)
         format.html { redirect_to @bug, notice: 'Bug was successfully created.' }
         format.json { render :show, status: :created, location: @bug }
       else

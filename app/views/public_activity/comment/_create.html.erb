@@ -1,0 +1,15 @@
+<% if activity.trackable %> 
+	<% if activity.trackable.owner_type == 'Story' %>
+  	<%= link_to  project_story_path(id:  activity.trackable.owner_id, project_id: activity.trackable.owner.project.id)  do %> 
+		<span class="activity-owner"><%=activity.owner.email%></span> created a new comment
+	on story - <%= activity.trackable.owner.name %>.
+		<% end %>
+	<% else %>
+		 <%= link_to  project_story_path(id:  activity.trackable.owner.story.id, project_id: activity.trackable.owner.story.project.id)  do %> 
+		<span class="activity-owner"><%=activity.owner.email%></span> created a new comment
+	on bug - <%= activity.trackable.owner.desc %>.
+		 <% end %>			
+	<% end %>
+<% else %>
+  	<span class="activity-owner"><%=activity.owner.email%></span> created a comment which has since been removed.
+<% end %>

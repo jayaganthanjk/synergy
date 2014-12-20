@@ -1,0 +1,7 @@
+<% if activity.trackable %> 
+  <%= link_to "/#{activity.owner.id}/profile"  do %> 
+<span class="activity-owner"><%=activity.owner.email%></span> signed up succesfully!
+  <% end %>
+<% else %>
+  <span class="activity-owner"><%=activity.owner.email%></span> has deleted his account!
+<% end %>

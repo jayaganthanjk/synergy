@@ -1,0 +1,7 @@
+<% if activity.trackable %> 
+  <%= link_to project_story_path(id:  activity.trackable.story_id, project_id: activity.trackable.story.project.id)  do %> 
+<span class="activity-owner"><%=activity.owner.name %></span> created a new bug - <%=activity.trackable.desc%>.
+  <% end %>
+<% else %>
+  <span class="activity-owner"><%=activity.owner.name %></span> created a bug which has since been removed.
+<% end %>

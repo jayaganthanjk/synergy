@@ -24,10 +24,13 @@ class CommentsController < ApplicationController
   # POST /comments
   # POST /comments.json
   def create
-    @comment = Comment.new(comment_params)
-
+    @owner = find_owner 
+    @comment = Comment.new(comment_params
+    @comment.owner = @owner
+    @comment.user_id = current_user.id
     respond_to do |format|
       if @comment.save
+        activity = @comment.create_activity :create, owner: current_user, recipient: Project.find(@comment.owner)
         format.html { redirect_to @comment, notice: 'Comment was successfully created.' }
         format.json { render :show, status: :created, location: @comment }
       else
@@ -70,5 +73,14 @@ class CommentsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def comment_params
       params[:comment]
+    end
+
+    def find_owner
+      case  params[:comment][:owner_type]
+        when 'Story' 
+          return Story.find params[:comment][:owner_id]
+        when 'Bug' 
+          return Bug.find params[:comment][:owner_id]
+      end
     end
 end

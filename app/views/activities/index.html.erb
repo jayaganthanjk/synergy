@@ -1,0 +1,6 @@
+<h1>Activities</h1><br />
+<% @activities.each do |activity| %>
+  <% if activity.owner.email? %>
+    <%= render_activity activity %>
+  <% end %><br /><br />
+<% end %>

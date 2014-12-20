@@ -30,6 +30,7 @@ class StoriesController < ApplicationController
 
     respond_to do |format|
       if @story.save
+        activity = @story.create_activity :create, owner: current_user, recipient: Project.find(@story.project_id)
         format.html { redirect_to @story, notice: 'Story was successfully created.' }
         format.json { render :show, status: :created, location: @story }
       else

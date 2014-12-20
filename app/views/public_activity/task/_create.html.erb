@@ -1,0 +1,7 @@
+<% if activity.trackable %> 
+  <%= link_to(project_story_path(id:  activity.trackable.story_id, project_id: activity.recipient_id)) do %> 
+ <span class="activity-owner"><%=activity.owner.email %></span> created a task - <%=activity.trackable.name%> 
+  <% end %>
+<% else %>
+ <span class="activity-owner"><%= activity.owner.email %></span> created a task which has since been removed.
+<% end %>

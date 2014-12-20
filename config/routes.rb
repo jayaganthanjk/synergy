@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   
 
+  get 'activities', to: 'activities#index'
+
   resources :projects do
     resources :stories
   end

@@ -1,0 +1,7 @@
+<% if activity.trackable %> 
+  <%= link_to project_path(activity.recipient_id) do %>
+ <span class="activity-owner"><%=activity.owner.email%> </span> created a new sprint - <%=activity.trackable.name%>
+	<% end %>
+<% else %>
+ <span class="activity-owner"><%= activity.owner.email %></span> created a sprint which has since been removed.
+<% end %>

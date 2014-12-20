@@ -1,0 +1,5 @@
+<% if activity.trackable %>
+	<%= link_to "/#{activity.owner.id}/profile"  do %> 
+		<span class="activity-owner"><%=activity.owner.email%></span> requested you to assign a project!
+		<% end %>
+<% end %>

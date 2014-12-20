@@ -25,8 +25,10 @@ class TimelogsController < ApplicationController
   # POST /timelogs
   # POST /timelogs.json
   def create
+    @owner = find_parent
     @timelog = Timelog.new(timelog_params)
-
+    @timelog.owner = @owner
+    @timelog.user_id = current_user.id
     respond_to do |format|
       if @timelog.save
         format.html { redirect_to @timelog, notice: 'Timelog was successfully created.' }
@@ -71,5 +73,14 @@ class TimelogsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def timelog_params
       params[:timelog]
+    end
+
+    def find_parent
+      case  params[:timelog][:owner_type]
+        when 'Project' 
+          return Project.find params[:timelog][:owner_id]
+        when 'Task' 
+          return Task.find params[:timelog][:owner_id]
+      end
     end
 end

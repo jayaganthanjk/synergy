@@ -1,0 +1,7 @@
+<% if activity.trackable %> 
+  <%= link_to  project_path(activity.trackable) do %> 
+<span class="activity-owner"><%=activity.owner.email %></span> created a new project - <%=activity.trackable.name%>
+  <% end %>
+<% else %>
+  <span class="activity-owner"><%=activity.owner.email %></span> created a project which has since been removed.
+<% end %>

@@ -29,6 +29,7 @@ class TasksController < ApplicationController
 
     respond_to do |format|
       if @task.save
+        activity = @task.create_activity :create, owner: current_user, recipient: Project.find(@task.project_id)
         format.html { redirect_to @task, notice: 'Task was successfully created.' }
         format.json { render :show, status: :created, location: @task }
       else
