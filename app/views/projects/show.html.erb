@@ -1,4 +1,15 @@
-<p id="notice"><%= notice %></p>
-<%= @project.name %>
-<%= link_to 'Edit', edit_project_path(id: params[:id]) %> |
-<%= link_to 'Back', projects_path %>
+<div class="row">
+  <div class="container">
+    <p id="notice"><%= notice %></p>
+    <div class="row">
+      <h3>
+      <%= @project.name.slice(0,1).capitalize + @project.name.slice(1..-1) %>
+      <%= link_to 'Edit', edit_project_path(id: params[:id]), class: "btn btn-warning" %> 
+      <%= link_to 'Back', projects_path , class: "btn btn-danger" %>
+      </h3>
+    </div>
+    <div class="row">
+      <%= link_to "Add story to backlog", new_project_story_path(project_id: params[:id]),class: "btn btn-primary" %>
+    </div>
+  </div>
+</div>

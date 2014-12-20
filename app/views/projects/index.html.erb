@@ -1,27 +1,26 @@
 <div class="row">
   <div class="container">
     <% if @projects.any? %>
-      <h1>Listing projects</h1>
-
-      <table>
-        <thead>
-          <tr>
-            <th colspan="3"></th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <% @projects.each do |project| %>
-            <tr>
-              <td><%= link_to project.name, project %></td>
-              <td><%= link_to 'Edit', edit_project_path(project) %></td>
-              <td><%= link_to 'Destroy', project, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
+      <h1>Listing projects <%= link_to 'New Project', new_project_path , :class => "btn btn-primary pull-right"%></h1>
+      <% @projects.each do |project| %>
+        <div class="panel panel-default col-md-4">
+          <div class="panel-heading">
+            <div class="panel-title">
+              <h3><%= link_to project.name, project %>
+              <div class="pull-right clearfix">
+                <%= link_to 'Edit', edit_project_path(project), :class => "btn btn-warning" %>
+                <%= link_to 'Destroy', project, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger" %>
+              </div>
+              <div class="clearfix"></div>
+            </h3>
+            </div>
+          </div>
+          <div class="panel-body">
+            <%= time_ago_in_words(project.created_at, include_seconds: true) %> ago
+          </div>
+        </div>
+      <% end %>
       <br>
-    <% end %>
-    <%= link_to 'New Project', new_project_path %>
+    <% end %>  
   </div>
 </div>
