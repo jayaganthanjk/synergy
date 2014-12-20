@@ -7,4 +7,6 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   delegate :can?, :cannot?, to: :ability
+  has_many :comments
+  has_many :bugs
 end

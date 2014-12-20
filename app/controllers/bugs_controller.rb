@@ -2,35 +2,22 @@ class BugsController < ApplicationController
   authorize_resource
   before_action :set_bug, only: [:show, :edit, :update, :destroy]
 
-  # GET /bugs
-  # GET /bugs.json
-  def index
-    @bugs = Bug.all
-  end
-
-  # GET /bugs/1
-  # GET /bugs/1.json
-  def show
-  end
-
   # GET /bugs/new
   def new
+    @story = Story.find params[:story_id] 
     @bug = Bug.new
   end
 
-  # GET /bugs/1/edit
-  def edit
-  end
 
   # POST /bugs
   # POST /bugs.json
   def create
     @bug = Bug.new(bug_params)
-
+    @bug.user_id = current_user.id
     respond_to do |format|
       if @bug.save
         activity = @bug.create_activity :create, owner: current_user, recipient: Project.find(@bug.story.project_id)
-        format.html { redirect_to @bug, notice: 'Bug was successfully created.' }
+        format.html { redirect_to project_story_tasks_path(project_id: @bug.story.project_id, story_id: @bug.story_id), notice: 'Bug was successfully created.' }
         format.json { render :show, status: :created, location: @bug }
       else
         format.html { render :new }
@@ -39,26 +26,13 @@ class BugsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /bugs/1
-  # PATCH/PUT /bugs/1.json
-  def update
-    respond_to do |format|
-      if @bug.update(bug_params)
-        format.html { redirect_to @bug, notice: 'Bug was successfully updated.' }
-        format.json { render :show, status: :ok, location: @bug }
-      else
-        format.html { render :edit }
-        format.json { render json: @bug.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
+ 
   # DELETE /bugs/1
   # DELETE /bugs/1.json
   def destroy
     @bug.destroy
     respond_to do |format|
-      format.html { redirect_to bugs_url, notice: 'Bug was successfully destroyed.' }
+      format.html { redirect_to project_story_tasks_path(project_id: @bug.story.project_id, story_id: @bug.story_id), notice: 'Bug was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -71,6 +45,6 @@ class BugsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def bug_params
-      params[:bug]
+      params.require(:bug).permit(:content, :story_id)
     end
 end

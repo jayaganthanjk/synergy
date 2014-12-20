@@ -12,5 +12,32 @@
         </div>
       </div>      
     <% end %>
+
+  <% if @story.bugs.any? %>
+  <h2>Bugs : </h2>
+    <% @story.bugs.each do |bug| %>
+      <%= bug.content %><br>
+       <% if bug.comments.any? %>
+      <h2>Bug Comments : </h2>
+        <% bug.comments.each do |comment| %>
+         <%= comment.user.email %> :  <%= comment.content %><br>
+        <% end %>
+      <% end %>
+      <%= render 'comments/bug_comment', bug_id: bug.id %>
+    <% end %>
+  <% end %>
+  <%= link_to 'add bug', new_bug_path(story_id: @story.id) %>
   </div>
+  <br><br>
+
+   <% if @story.comments.any? %>
+  <h2>Comments : </h2>
+    <% @story.comments.each do |comment| %>
+     <%= comment.user.email %> :  <%= comment.content %><br>
+    <% end %>
+  <% end %>
+  <%= render 'comments/form' %>
+
+  </div>
+
 </div>

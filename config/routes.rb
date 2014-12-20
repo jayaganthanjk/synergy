@@ -8,6 +8,12 @@ Rails.application.routes.draw do
       resources :tasks
     end
   end
+
+  resources :bugs, only: [:new ,:create, :destroy]
+
+  resources :comments
+
+
   devise_for :users
   get '/search', to: 'searches#index'
 

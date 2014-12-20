@@ -1,25 +1,26 @@
-<h1>Listing searches</h1>
+<h1>Search Results : </h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Index</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+<% if @projects.any? %>
+  <h2> Projects : </h2>
+  <% @projects.each do |project| %>
+    <%= link_to project.name, project %> <br>
+  <% end %>
+<% end %>
 
-  <tbody>
-    <% @searches.each do |search| %>
-      <tr>
-        <td><%= search.index %></td>
-        <td><%= link_to 'Show', search %></td>
-        <td><%= link_to 'Edit', edit_search_path(search) %></td>
-        <td><%= link_to 'Destroy', search, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<% if @stories.any? %>
+  <h2> Stories : </h2>
+  <% @stories.each do |story| %>
+    <%= link_to story.name, project_story_path(project_id: story.project_id, id: story.id) %> <br>
+  <% end %>
+<% end %>
 
-<br>
+<% if @tasks.any? %>
+  <h2> Tasks : </h2>
+  <% @tasks.each do |task| %>
+    <%= link_to task.name, project_story_path(project_id: task.project_id, id: task.story_id) %> <br>
+  <% end %>
+<% end %>
 
-<%= link_to 'New Search', new_search_path %>
+<% unless @projects.any? and @stories.any? and @tasks.any? %>
+  <h2> No results found.. </h2>
+<% end %>
