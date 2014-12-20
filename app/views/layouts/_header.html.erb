@@ -1,0 +1,33 @@
+<div class="navbar navbar-inverse navbar-static-top">
+  <div class="navbar-header">
+    <%= link_to "Synergy", root_path, :class => "navbar-brand" %>
+          <form class="navbar-form navbar-left" role="search">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search">
+        </div>
+      </form>
+  </div>
+  <div class="container-fluid"> 
+  <ul class="nav navbar-nav navbar-right">
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Links <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+          <li><a href="#">Profile</a></li>
+          <li class="divider"></li>
+            <% if current_user %>
+              <li>
+                <%= link_to 'Sign out', destroy_user_session_path, method: :delete %>
+              </li>
+            <% else %>
+              <li>
+                <%= link_to 'Sign in', new_user_session_path %>
+              </li>
+              <li>
+                <%= link_to 'Register', new_user_registration_path %>
+              </li>
+            <% end %>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</div>
