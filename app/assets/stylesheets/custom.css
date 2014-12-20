@@ -1,4 +1,12 @@
-.navbar-color{
-  background-color: rgb(106, 167, 218);
-  color:#111;
+.projects .panel-title h3 {
+	display: inline;
+}
+.menubar {
+	height:60px;
+	outline:#aaa;
+}
+
+.project .progress {
+	height: 5px;
+	border-radius: 0px;
 }
