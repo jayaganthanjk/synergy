@@ -1,4 +1,5 @@
 class TimelogsController < ApplicationController
+  authorize_resource
   before_action :set_timelog, only: [:show, :edit, :update, :destroy]
 
   # GET /timelogs
