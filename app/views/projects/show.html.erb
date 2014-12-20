@@ -1,4 +1,4 @@
 <p id="notice"><%= notice %></p>
-
-<%= link_to 'Edit', edit_project_path(@project) %> |
+<%= @project.name %>
+<%= link_to 'Edit', edit_project_path(id: params[:id]) %> |
 <%= link_to 'Back', projects_path %>

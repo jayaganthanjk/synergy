@@ -39,6 +39,7 @@ gem 'fullcalendar-rails'
 gem 'devise_invitable', '~> 1.3.4'
 gem "breadcrumbs_on_rails"
 gem 'carrierwave'
+gem 'bootstrap-datepicker-rails'
 
 group :development, :test do
   gem 'better_errors'
