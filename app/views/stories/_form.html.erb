@@ -1,17 +1,31 @@
-<%= form_for(@story) do |f| %>
+<%= form_for([@project, @story]) do |f| %>
   <% if @story.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@story.errors.count, "error") %> prohibited this story from being saved:</h2>
 
       <ul>
-      <% @story.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
+        <% @story.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
       </ul>
     </div>
   <% end %>
 
-  <div class="actions">
-    <%= f.submit %>
+  <div class="form-group">    
+    <%= f.label :name %> 
+    <%= f.text_field :name, :class => "form-control" %>
   </div>
+
+
+  <div class="form-group">    
+    <%= f.label :description  %> 
+    <%= f.text_area :description ,:class => "form-control" %>
+  </div>
+
+  <div class="form-group">    
+    <%= f.label :due_date %> 
+    <%= f.text_field :due_date,:class => "form-control" %>
+  </div>
+
+  <%= f.submit "Create", class: "btn btn-primary" %>
 <% end %>

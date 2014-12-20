@@ -21,6 +21,7 @@ class StoriesController < ApplicationController
 
   # GET /stories/1/edit
   def edit
+    @project = Project.find(params[:project_id])
   end
 
   # POST /stories
@@ -45,7 +46,7 @@ class StoriesController < ApplicationController
   def update
     respond_to do |format|
       if @story.update(story_params)
-        format.html { redirect_to @story, notice: 'Story was successfully updated.' }
+        format.html { redirect_to project_path(id: @story.project_id), notice: 'Story was successfully updated.' }
         format.json { render :show, status: :ok, location: @story }
       else
         format.html { render :edit }

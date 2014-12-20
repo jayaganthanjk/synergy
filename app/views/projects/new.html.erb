@@ -3,38 +3,9 @@
     <div class="col-md-4 col-md-offset-4">
       <h1 class="text-info">New project</h1>
 
-      <%= form_for(@project) do |f| %>
-        <% if @project.errors.any? %>
-          <div id="error_explanation">
-            <h2><%= pluralize(@project.errors.count, "error") %> prohibited this project from being saved:</h2>
 
-            <ul>
-            <% @project.errors.full_messages.each do |message| %>
-              <li><%= message %></li>
-            <% end %>
-            </ul>
-          </div>
-        <% end %>
 
-        <div class="form-group">
-          <%= f.label :name  %> 
-          <%= f.text_field :name , :class => "form-control" %>
-        </div>
-
-        <div class="form-group">
-          <%= f.label :start %>
-          <%= f.label :end ,:class => "pull-right"%>
-          <div class="input-daterange input-group">
-            <%= f.text_field :start , :class => "form-control dp-start-date", :value => Date.current.strftime("%d-%m-%Y") %>
-            <span class="input-group-addon">to</span>
-            <%= f.text_field :end , :class => "form-control dp-end-date" %>
-          </div>
-        </div>
-
-        <div class="actions">
-          <%= f.submit "Create Project" , :class => "btn btn-primary" %>
-        </div>
-        <% end %>
+        <%= render 'form'%>
 
       <%= link_to 'Back', root_path %>
     </div>
