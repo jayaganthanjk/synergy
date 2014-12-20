@@ -14,23 +14,23 @@
           <div class="panel panel-default">
             <div class="panel-heading">
               <div class="row container">
+              <div class="label state-<%= story.state.parameterize %>"><%= story.state %></div>
                 <div class="text-info">
-                  <%= link_to story.name, project_story_tasks_path(story_id: story.id,project_id: story.project_id) %>
+                  <%= link_to story.name.capitalize, project_story_tasks_path(story_id: story.id,project_id: story.project_id) %>
                   <%= link_to "Edit", edit_project_story_path(project_id: story.project_id, id: story.id),class: "btn btn-warning" %>
                 </div>
                 Completed <span class="badge">10</span>
                 Pending <span class="badge">5</span>
                 In Progress <span class="badge">4</span>
-                <div class="pull-right badge">
-                  Due Date: <%= story.due_date.strftime("%d-%m-%Y") %>
+                <div class="pull-right">
+                  <span class="label label-default">Due Date: <%= story.due_date.strftime("%d-%m-%Y") %></span>
                 </div>
               </div>
             </div>
             <div class="progress">
-              <div class="progress-bar progress-bar-success" style="width: 35%">
-              </div>
-              <div class="progress-bar progress-bar-warning" style="width: 20%">
-              </div>
+              <div class="progress-bar progress-bar-success" data-toggle="tooltip" title="10" style="width: 35%"></div>
+              <div class="progress-bar progress-bar-warning" data-toggle="tooltip" title="5" style="width: 20%"></div>
+              <div class="progress-bar progress-bar-danger" data-toggle="tooltip" title="4" style="width: 45%"></div>
             </div>
             <div class="panel-body"></div>
           </div>

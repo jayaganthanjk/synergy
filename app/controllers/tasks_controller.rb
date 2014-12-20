@@ -6,7 +6,7 @@ class TasksController < ApplicationController
   # GET /tasks.json
   def index
     @story = Story.find params[:story_id]
-    @tasks = Task.all
+    @tasks = @story.tasks
   end
 
   # GET /tasks/1

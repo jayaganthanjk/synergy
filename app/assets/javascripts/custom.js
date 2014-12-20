@@ -4,4 +4,5 @@ $(document).ready(function(){
   $('.input-daterange').datepicker({
   });
   $('.input-group.date').datepicker({});
+  $('[data-toggle="tooltip"]').tooltip();
 }); 

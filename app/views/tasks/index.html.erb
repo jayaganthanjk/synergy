@@ -1,43 +1,46 @@
 <div class="row">
   <div class="container">
     <h1>Listing tasks <%= link_to 'New Task', new_project_story_task_path, :class=>"btn btn-primary pull-right" %></h1>
-    <% @tasks.each do |task| %>
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <div class="panel-title">
-            <%= task.name %>
-            <%= link_to 'Edit', edit_project_story_task_path(project_id: task.project_id, story_id: task.story_id,id: task.id), :class => "btn btn-warning" %>
-            <%= link_to 'Destroy', project_story_task_path(project_id: task.project_id,story_id: task.story_id,id: task.id), method: :delete, :class => "btn btn-danger",data: { confirm: 'Are you sure?' } %>
-          </div>
-        </div>
-      </div>      
-    <% end %>
+    <% if @tasks.any? %>
+    	<% @tasks.each do |task| %>
+      	  <div class="panel panel-default">
+        	<div class="panel-heading">
+	          <div class="row container">
+	            <%= task.name %>
+	            <%= link_to 'Edit', edit_project_story_task_path(project_id: task.project_id, story_id: task.story_id,id: task.id), :class => "btn btn-warning" %>
+	            <%= link_to 'Destroy', project_story_task_path(project_id: task.project_id,story_id: task.story_id,id: task.id), method: :delete, :class => "btn btn-danger",data: { confirm: 'Are you sure?' } %>
+	          </div>
+	        </div>
+	      </div>      
+	    <% end %>
+	<% else %>
+		<p>No Tasks yet</p>
+	<% end %>
 
-  <% if @story.bugs.any? %>
-  <h2>Bugs : </h2>
-    <% @story.bugs.each do |bug| %>
-      <%= bug.content %><br>
-       <% if bug.comments.any? %>
-      <h2>Bug Comments : </h2>
-        <% bug.comments.each do |comment| %>
-         <%= comment.user.email %> :  <%= comment.content %><br>
-        <% end %>
-      <% end %>
-      <%= render 'comments/bug_comment', bug_id: bug.id %>
-    <% end %>
-  <% end %>
-  <%= link_to 'add bug', new_bug_path(story_id: @story.id) %>
+	<% if @story.bugs.any? %>
+	  <h2>Bugs</h2>
+	    <% @story.bugs.each do |bug| %>
+	      <%= bug.content %><br>
+	       <% if bug.comments.any? %>
+	      <h2>Bug Comments : </h2>
+	       <% bug.comments.each do |comment| %>
+	         <%= comment.user.email %> :  <%= comment.content %><br>
+	       <% end %>
+	      <% end %>
+	      <div class="container">
+	      	<%= render 'comments/bug_comment', bug_id: bug.id %>
+	      </div>
+	    <% end %>
+	  <% end %>
+  	<%= link_to 'add bug', new_bug_path(story_id: @story.id) %>
+  	<h2>Story Comments</h2>
+  	  	<% if @story.comments.any? %>
+   	 	<% @story.comments.each do |comment| %>
+     	<%= comment.user.email %> :  <%= comment.content %><br>
+    	<% end %>
+    	<% else %>
+    		<p>No story comments yet!</p>
+  		<% end %>
+  	<%= render 'comments/form' %>
   </div>
-  <br><br>
-
-   <% if @story.comments.any? %>
-  <h2>Comments : </h2>
-    <% @story.comments.each do |comment| %>
-     <%= comment.user.email %> :  <%= comment.content %><br>
-    <% end %>
-  <% end %>
-  <%= render 'comments/form' %>
-
-  </div>
-
 </div>
