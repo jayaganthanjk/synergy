@@ -23,7 +23,5 @@ module Synergy
       Devise::SessionsController.skip_before_filter :authenticate_user!
       Devise::RegistrationsController.skip_before_filter :authenticate_user!
     end
-        
-    end
   end
 end
