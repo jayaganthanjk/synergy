@@ -21,17 +21,19 @@ class StoriesController < ApplicationController
 
   # GET /stories/1/edit
   def edit
+    @project = Project.find(params[:project_id])
   end
 
   # POST /stories
   # POST /stories.json
   def create
     @story = Story.new(story_params)
+    @story.project_id = params[:project_id]
 
     respond_to do |format|
       if @story.save
         activity = @story.create_activity :create, owner: current_user, recipient: Project.find(@story.project_id)
-        format.html { redirect_to @story, notice: 'Story was successfully created.' }
+        format.html { redirect_to  project_path(id: @story.project_id), notice: 'Story was successfully created.' }
         format.json { render :show, status: :created, location: @story }
       else
         format.html { render :new }
@@ -45,7 +47,7 @@ class StoriesController < ApplicationController
   def update
     respond_to do |format|
       if @story.update(story_params)
-        format.html { redirect_to @story, notice: 'Story was successfully updated.' }
+        format.html { redirect_to project_path(id: @story.project_id), notice: 'Story was successfully updated.' }
         format.json { render :show, status: :ok, location: @story }
       else
         format.html { render :edit }
