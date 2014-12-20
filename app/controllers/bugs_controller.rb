@@ -1,4 +1,5 @@
 class BugsController < ApplicationController
+  authorize_resource
   before_action :set_bug, only: [:show, :edit, :update, :destroy]
 
   # GET /bugs

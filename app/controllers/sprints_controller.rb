@@ -1,4 +1,5 @@
 class SprintsController < ApplicationController
+  authorize_resource
   before_action :set_sprint, only: [:show, :edit, :update, :destroy]
 
   # GET /sprints

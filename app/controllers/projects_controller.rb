@@ -1,10 +1,11 @@
 class ProjectsController < ApplicationController
+  authorize_resource
   before_action :set_project, only: [:show, :edit, :update, :destroy]
 
   # GET /projects
   # GET /projects.json
   def index
-    @projects = Project.all
+    @projects = Project.order('created_at DESC')
   end
 
   # GET /projects/1

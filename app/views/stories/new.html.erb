@@ -1,5 +1,32 @@
-<h1>New story</h1>
+<div class="row">
+  <div class="container">
+    <div class="col-md-4 col-md-offset-4">
+      <h3 class="text-center text-info">New story</h3>
 
-<%= render 'form' %>
+      <%= form_for(@story, url: project_stories_path) do |f|%>
+      
+      <div class="form-group">    
+        <%= f.label :name %> 
+        <%= f.text_field :name, :class => "form-control" %>
+      </div>
 
-<%= link_to 'Back', stories_path %>
+
+      <div class="form-group">    
+        <%= f.label :description  %> 
+        <%= f.text_area :description ,:class => "form-control" %>
+      </div>
+
+      <div class="form-group">    
+        <%= f.label :due_date %> 
+        <%= f.text_field :due_date,:class => "form-control" %>
+      </div>
+
+      <%= f.submit "Add Story", class: "btn btn-primary" %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+
+
+

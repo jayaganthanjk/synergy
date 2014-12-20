@@ -1,4 +1,5 @@
 class StoriesController < ApplicationController
+  authorize_resource
   before_action :set_story, only: [:show, :edit, :update, :destroy]
 
   # GET /stories
@@ -14,6 +15,7 @@ class StoriesController < ApplicationController
 
   # GET /stories/new
   def new
+    @project = Project.find params[:project_id]
     @story = Story.new
   end
 
@@ -69,6 +71,6 @@ class StoriesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def story_params
-      params[:story]
+      params.require(:story).permit(:name, :description, :due_date)
     end
 end
