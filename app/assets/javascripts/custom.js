@@ -3,4 +3,5 @@ $(document).ready(function(){
   $.fn.datepicker.defaults.startDate = "d";
   $('.input-daterange').datepicker({
   });
+  $('.input-group.date').datepicker({});
 }); 
