@@ -7,7 +7,7 @@ class Story < ActiveRecord::Base
 	has_many :bugs
 	has_many :comments, as: :owner
 
-	state_machine :initial => "Not Started" do
+	state_machine :state, :initial => "Not Started" do
     event :start do
       transition all  => "In Progress"
     end

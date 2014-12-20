@@ -5,7 +5,7 @@ class Task < ActiveRecord::Base
 	has_many :timelogs
 	include PublicActivity::Model
 
-	state_machine :initial => "Not Started" do
+	state_machine :state, :initial => "Not Started" do
     after_transition any => any, :do => :story_update
     event :start do
       transition all => "In Progress"
