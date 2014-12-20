@@ -1,4 +1,10 @@
-<p id="notice"><%= notice %></p>
-
-<%= link_to 'Edit', edit_story_path(@story) %> |
-<%= link_to 'Back', stories_path %>
+<div class="row">
+  <div class="container">
+    <div class="row">
+      <h2>
+        Listing tasks
+      </h2>
+    </div>
+  </div>
+</div>
+<%= link_to 'Edit', edit_project_story_path(project_id: @story.project_id, id: @story.id) %> 

@@ -15,7 +15,7 @@
             <div class="panel-heading">
               <div class="row container">
                 <span class="text-info">
-                  <%= story.name %>
+                  <%= link_to story.name, project_story_tasks_path(story_id: story.id,project_id: story.project_id) %>
                   <%= link_to "Edit", edit_project_story_path(project_id: story.project_id, id: story.id),class: "btn btn-warning" %>
                 </span>
                 <span class="pull-right">
