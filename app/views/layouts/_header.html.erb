@@ -1,11 +1,12 @@
 <div class="navbar navbar-inverse navbar-static-top">
   <div class="navbar-header">
     <%= link_to "Synergy", root_path, :class => "navbar-brand" %>
-          <form class="navbar-form navbar-left" role="search">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Search">
-        </div>
-      </form>
+      <%= form_tag "/search", id: 'search-form', method: 'get', class: 'navbar-form navbar-left' do %>
+      <div class="form-group">
+         <%= text_field_tag :search, params[:search], placeholder: "Search", id: 'search-text', value: '', 
+         class: 'form-control'  %>
+      </div>
+      <% end %>
   </div>
   <div class="container-fluid"> 
   <ul class="nav navbar-nav navbar-right">
