@@ -14,25 +14,13 @@ class Story < ActiveRecord::Base
     event :not_started do
       transition all => "Not Started"
     end
-    event :all_tasks_done do
-      transition all => "Code Review"
-    end
-    event :code_reviewed do
-      transition all  => "Testing"
-    end
-    event :qa_passed do
-      transition all => "Deploy"
-    end
-    event :deployed do
+    event :deliver do
       transition all => "Delivered"
     end
-    event :accepted do
+    event :accept do
       transition all => "Accepted"
     end
-    event :reworking do
-      transition 'Delivered' => 'Reworking'
-    end
-    event :rejected do
+    event :reject do
       transition all => "Rejected"
     end
   end
@@ -53,7 +41,7 @@ class Story < ActiveRecord::Base
       return
     end
     if tasks_statuses == ['Done']
-      all_tasks_done
+      deliver
       return
     end
   end

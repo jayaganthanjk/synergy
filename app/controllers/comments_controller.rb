@@ -1,37 +1,19 @@
 class CommentsController < ApplicationController
-  before_action :set_comment, only: [:show, :edit, :update, :destroy]
-
-  # GET /comments
-  # GET /comments.json
-  def index
-    @comments = Comment.all
-  end
-
-  # GET /comments/1
-  # GET /comments/1.json
-  def show
-  end
-
-  # GET /comments/new
-  def new
-    @comment = Comment.new
-  end
-
-  # GET /comments/1/edit
-  def edit
-  end
 
   # POST /comments
   # POST /comments.json
   def create
-    @owner = find_owner 
-    @comment = Comment.new(comment_params
-    @comment.owner = @owner
-    @comment.user_id = current_user.id
+    @comment = Comment.new(comment_params)
+    @owner = find_owner
     respond_to do |format|
       if @comment.save
-        activity = @comment.create_activity :create, owner: current_user, recipient: Project.find(@comment.owner)
-        format.html { redirect_to @comment, notice: 'Comment was successfully created.' }
+        if @owner.class.to_s == 'Story'
+          activity = @comment.create_activity :create, owner: current_user, recipient: Project.find(@comment.owner.project_id)
+          format.html { redirect_to project_story_tasks_path(project_id: @owner.project_id, story_id: @owner.id), notice: 'Comment was successfully created.' }
+        else
+          activity = @comment.create_activity :create, owner: current_user, recipient: Project.find(@comment.owner.story.project_id)
+          format.html { redirect_to project_story_tasks_path(project_id: @owner.story.project_id, story_id: @owner.story.id), notice: 'Comment was successfully created.' }
+        end
         format.json { render :show, status: :created, location: @comment }
       else
         format.html { render :new }
@@ -40,19 +22,7 @@ class CommentsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /comments/1
-  # PATCH/PUT /comments/1.json
-  def update
-    respond_to do |format|
-      if @comment.update(comment_params)
-        format.html { redirect_to @comment, notice: 'Comment was successfully updated.' }
-        format.json { render :show, status: :ok, location: @comment }
-      else
-        format.html { render :edit }
-        format.json { render json: @comment.errors, status: :unprocessable_entity }
-      end
-    end
-  end
+
 
   # DELETE /comments/1
   # DELETE /comments/1.json
@@ -65,14 +35,9 @@ class CommentsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_comment
-      @comment = Comment.find(params[:id])
-    end
-
     # Never trust parameters from the scary internet, only allow the white list through.
     def comment_params
-      params[:comment]
+      params.require(:comment).permit(:content, :owner_id, :owner_type, :user_id)
     end
 
     def find_owner

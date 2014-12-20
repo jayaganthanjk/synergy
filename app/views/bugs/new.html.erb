@@ -1,5 +1,10 @@
-<h1>New bug</h1>
+<%= form_for(@bug) do |f| %>
+  <div class="form-group">
+    <%= f.label :content  %>
+    <%= f.text_area :content, placeholder: 'describe bug', class: 'form-control' %>
+  </div>
 
-<%= render 'form' %>
+  	<%= f.hidden_field :story_id, value: @story.id %>
 
-<%= link_to 'Back', bugs_path %>
+    <%= f.submit "add bug", class: 'btn btn-danger' %>
+<% end %>
