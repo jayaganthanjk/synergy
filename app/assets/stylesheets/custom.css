@@ -10,3 +10,13 @@
 	height: 5px;
 	border-radius: 0px;
 }
+
+.story .progress {
+	height: 5px;
+	border-radius: 0px;
+	background-color: #d9534f;
+	box-shadow: inset 0 -1px 0 rgba(0,0,0,0.15);
+}
+.story .text-info {
+	display: inline;
+}

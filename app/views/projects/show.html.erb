@@ -8,21 +8,31 @@
       <%= link_to "Add story to backlog", new_project_story_path(project_id: params[:id]),class: "btn btn-primary pull-right" %>
       </h3>
     </div>
-    <div class="row">
+    <div class="row story">
       <% if @project.stories.any? %>
         <% @project.stories.each do |story| %>
           <div class="panel panel-default">
             <div class="panel-heading">
               <div class="row container">
-                <span class="text-info">
+                <div class="text-info">
                   <%= link_to story.name, project_story_tasks_path(story_id: story.id,project_id: story.project_id) %>
                   <%= link_to "Edit", edit_project_story_path(project_id: story.project_id, id: story.id),class: "btn btn-warning" %>
-                </span>
-                <span class="pull-right">
-                  Due Date: <%= story.due_date %>
-                </span>
+                </div>
+                Completed <span class="badge">10</span>
+                Pending <span class="badge">5</span>
+                In Progress <span class="badge">4</span>
+                <div class="pull-right badge">
+                  Due Date: <%= story.due_date.strftime("%d-%m-%Y") %>
+                </div>
               </div>
             </div>
+            <div class="progress">
+              <div class="progress-bar progress-bar-success" style="width: 35%">
+              </div>
+              <div class="progress-bar progress-bar-warning" style="width: 20%">
+              </div>
+            </div>
+            <div class="panel-body"></div>
           </div>
         <% end %>
       <% else %>
