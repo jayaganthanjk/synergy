@@ -12,7 +12,7 @@ class UserMailer < ActionMailer::Base
 		@by = by
 		@role = role
 		mail to: @user.email, subject: 'Assigned role!!' do |format|
-			format.html { "assined a role go check notifications!!" }
+			format.html { "assined role go check notifications!!" }
 		end
 	end
 end
