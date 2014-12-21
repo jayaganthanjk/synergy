@@ -76,24 +76,7 @@ class StoriesController < ApplicationController
     flash[:notice] = "Story Accepted!"
     redirect_to :back
   end
-
-  def get_tasks_progress
-    returndata = 1
-    taskslist = Story.find(params[:story_id]).tasks
-    estimatedTime = 0
-    completedTime = 0
-    notStartedTime = 0
-    taskslist.each do |task|
-      if task.state == "Done"
-        completedTime = completedTime + task.estimated_time
-      elsif task.state == "Not Started"
-        notStartedTime = notStartedTime + task.estimated_time
-      end 
-      estimatedTime = estimatedTime + task.estimated_time
-    end
-    inProgressTime = estimatedTime -  (completedTime + notStartedTime)
-    render :text => "#{estimatedTime},#{completedTime},#{inProgressTime}".to_json
-  end
+  
 
   # DELETE /stories/1
   # DELETE /stories/1.json
