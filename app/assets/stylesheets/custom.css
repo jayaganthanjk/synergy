@@ -18,6 +18,20 @@
 .story .text-info {
 	display: inline;
 }
+
 .notif-link a {
 	color: #16B1CD !important;
+}
+
+#activities .activity-owner {
+	color: #000;
+}
+
+#activities .activity {
+	position: relative;
+	display: block;
+	padding: 10px 15px;
+	margin-bottom: -1px;
+	background-color: #fff;
+	border: 1px solid #ddd;
 }

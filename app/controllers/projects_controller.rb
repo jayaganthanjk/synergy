@@ -6,6 +6,7 @@ class ProjectsController < ApplicationController
   # GET /projects.json
   def index
     @projects = Project.order('created_at DESC')
+    @activities = PublicActivity::Activity.where(recipient: current_user).order('created_at desc')
   end
 
   # GET /projects/1
@@ -81,8 +82,8 @@ class ProjectsController < ApplicationController
   end
 
   def completedstories
-    @stories = Project.find(params[:id]).stories.where(state: 'Accepted' )
-    @delivered_stories = Project.find(params[:id]).stories.where(state: 'Delivered' )
+    @stories = Project.find(params[:id]).stories.where(state: 'Delivered' )
+    @delivered_stories = Project.find(params[:id]).stories.where(state: 'Accepted' )
   end
 
   private

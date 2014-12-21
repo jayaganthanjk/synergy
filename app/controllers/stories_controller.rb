@@ -62,7 +62,7 @@ class StoriesController < ApplicationController
   def accept
     story = Story.find(params[:id])
     respond_to do |format|
-      if story.deliver
+      if story.accept
         format.html { redirect_to completedstories_project_path(id: story.project_id), notice: 'Accepted story' }
       end
     end

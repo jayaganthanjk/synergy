@@ -54,7 +54,6 @@ $(document).ready(function(){
   		"Not Started",
   		"In Progress",
   		"Delivered",
-  		"Accepted",
   		"Rejected"
   		]
   		var options = '<select class="form-control" data-id="'+$(this).data('id')+'">';

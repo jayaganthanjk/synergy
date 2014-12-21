@@ -1,0 +1,17 @@
+<div class="row">
+  <div class="container">
+    <div class="col-md-3">
+      <%= form_tag(taggings_path, method: "post") do %>
+        <div class="form-group">
+          <%= label_tag(:tag, "Add tag:") %>
+          <%= text_field_tag(:tag,nil,{class: "form-control"}) %>
+        </div>
+        <div class="form-group">
+          <%= label_tag(:duration, "Hours:") %>
+          <%= number_field_tag(:duration,nil,{class: "form-control"}) %>
+        </div>
+        <%= submit_tag("Add" , class: "btn btn-primary") %>
+      <% end %>
+    </div>
+  </div>
+</div>
