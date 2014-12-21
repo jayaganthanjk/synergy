@@ -1,0 +1,25 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <div class="row container">
+    <button title="Change state" data-state="<%= story.state %>" data-id="<%= story.id %>" class="inline-edit story btn btn-default state-<%= story.state.parameterize %>"><%= story.state %></button>
+      <div class="text-info">
+        <%= link_to story.name.capitalize, project_story_tasks_path(story_id: story.id,project_id: story.project_id) %>
+        <%= link_to "Edit", edit_project_story_path(project_id: story.project_id, id: story.id),class: "btn btn-warning" %>
+        <%= link_to "Delete", project_story_path(project_id: story.project_id, id: story.id), :method => :delete, class: "btn btn-danger",data: { confirm: 'Are you sure?' } %>
+      </div>
+      Completed <span class="badge"><%= story.tasks.where(state: 'Done').count %></span>
+      Pending <span class="badge"><%= story.tasks.where(state: 'Not Started').count %></span>
+      In Progress <span class="badge"><%= story.tasks.where(state: 'In Progress').count %></span>
+      <div class="pull-right">
+        <span class="label label-default">Due Date: <%= story.due_date.strftime("%d-%m-%Y") %></span>
+      </div>
+    </div>
+  </div>
+  <div class="progress">
+    <% progress, current = story.progress %>
+    <div class="progress-bar progress-bar-success" data-toggle="tooltip" title="<%= story.tasks.where(state: 'Done').count %>" style="width: <%= progress %>%"></div>
+    <div class="progress-bar progress-bar-warning" data-toggle="tooltip" title="<%= story.tasks.where(state: 'In Progress').count %>" style="width: <%= current %>%"></div>
+    <div class="progress-bar progress-bar-danger" data-toggle="tooltip" title="<%= story.tasks.where(state: 'Not Started').count %>" style="width: <%= 100-progress-current%>%"></div>
+  </div>
+  <div class="panel-body"></div>
+</div>
