@@ -1,0 +1,13 @@
+<ul class="dropdown-menu">
+<% if current_user.unseen_notifs.any? %>
+	<% current_user.unseen_notifs.limit(5).each do |notif| %>
+		<%= render_activity notif.get_activity %>
+	<% end %>
+<% else %>
+	<li><a href="#">No new notifications..</a></li>
+<% end %>
+<li class="divider"></li>
+<li>
+	<a href="/notifications">See all notifications</a>
+</li>
+</ul>
