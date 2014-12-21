@@ -83,12 +83,12 @@ class TasksController < ApplicationController
 
   def assigntask
     task = Task.find(params[:task_id])
-    user = User.find(params[:user_id])
-    task.assign(user)
+    task.user_id = params[:user_id]
+    task.save
     activity = task.create_activity :assign, owner: current_user, recipient: Project.find(Story.find(task.story_id).project_id)
     @notif = Notification.new
     @notif.notifs_create(task, activity.id)
-    render :text => user.email.to_json
+    render :text => task.to_json
   end
 
   def change_due_date

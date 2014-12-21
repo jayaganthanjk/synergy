@@ -5,6 +5,16 @@
     <%= link_to 'Edit', edit_project_story_task_path(project_id: task.project_id, story_id: task.story_id,id: task.id), :class => "btn btn-warning" %>
     <%= link_to 'Destroy', project_story_task_path(project_id: task.project_id,story_id: task.story_id,id: task.id), method: :delete, :class => "btn btn-danger",data: { confirm: 'Are you sure?' } %>
     <button title="Change state" data-state="<%= task.state %>" data-id="<%= task.id %>" class="inline-edit task btn btn-default state-<%= task.state.parameterize %>"><%= task.state %></button>
+    <select class="user-assign" data-id="<%= task.id %>">
+    	<% users = Project.find(task.project_id).users.uniq %>
+    	<% users.each do |user| %>
+    		<% if task.user_id == user.id %>
+    			<option selected disabled value="<%= user.id %>"><%= user.email %></option>
+    		<% else %>
+    			<option value="<%= user.id %>"><%= user.email %></option>
+    		<% end %>
+    	<% end %>
+    </select>
 </div>
 </div>
 </div> 

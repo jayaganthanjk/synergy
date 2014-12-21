@@ -37,5 +37,6 @@ Rails.application.routes.draw do
   root to: 'projects#index'
   get '/notifications', to: 'notifications#index'
   get '/clear_all', to: 'notifications#seen_all'
+  post '/usertaskassign', to: 'tasks#assigntask'
 
 end

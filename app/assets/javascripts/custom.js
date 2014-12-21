@@ -85,7 +85,7 @@ $(document).ready(function(){
   		"Done",
   		"Not Started"
   		]
-  		var options = '<select class="form-control" data-id="'+$(this).data('id')+'">';
+  		var options = '<select class="task-state form-control" data-id="'+$(this).data('id')+'">';
   		var current_state = $(this).data('state');
   		var id = $(this).data('id');
   		for (var i=0; i < states.length; i++) {
@@ -120,7 +120,7 @@ $(document).ready(function(){
 	});
   });
 
-    $( ".task" ).delegate( "select", "change", function() {
+    $( ".task" ).delegate( ".task-state", "change", function() {
 	$.ajax({
 		type: "POST",
 		url: "/changetaskstate",
@@ -132,5 +132,19 @@ $(document).ready(function(){
 		console.log(data, textStatus, jqXHR);
 		window.location.href = '';
 	});
+  });
+
+  $( ".task" ).delegate( ".user-assign", "change", function() {
+    $.ajax({
+      type: "POST",
+      url: "/usertaskassign",
+      data: {
+        task_id: $(this).data('id'),
+        user_id: $(this).val()
+      }
+    }).done(function(data, textStatus, jqXHR) {
+      console.log(data, textStatus, jqXHR);
+      window.location.href = '';
+    });
   });
 }); 
