@@ -21,6 +21,6 @@
   <% end %>
 <% end %>
 
-<% unless @projects.any? and @stories.any? and @tasks.any? %>
+<% unless (@projects + @stories + @tasks).count != 0 %>
   <h2> No results found.. </h2>
 <% end %>

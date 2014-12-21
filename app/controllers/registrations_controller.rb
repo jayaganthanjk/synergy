@@ -7,6 +7,7 @@ class RegistrationsController < Devise::RegistrationsController
     @user = User.new(user_params)
     if @user.save
       sign_in(@user)
+      UserMailer.signup_confirmation(@user).deliver
       activity = @user.create_activity :create, owner: current_user
       @notif = Notification.new
       @notif.user_signup(@user, activity.id)
