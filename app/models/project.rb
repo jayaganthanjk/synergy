@@ -16,6 +16,15 @@ class Project < ActiveRecord::Base
 	def users
     User.all.select { |user| user.can? :read, self }
   end
+
+  def progress
+		done=0; current=0; total = 0;
+		self.stories.each do |story|
+			a, b, c = story.progress
+			done+=a; current+=b; total+=c;
+		end
+		return done, current, total
+  end
   
 	def backlog_stories
 		self.stories.where(state: "Not Started")

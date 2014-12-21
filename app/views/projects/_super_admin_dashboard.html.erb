@@ -10,7 +10,7 @@
 <% if @projects.any? %> 
   <div class="projects">
   <% @projects.each do |project| %>
-  <div class="col-md-4 project">
+  <div class="col-md-6 project">
     <div class="panel panel-default">
       <div class="panel-heading">
         <div class="panel-title pull-left">
@@ -29,6 +29,9 @@
         </div>
       </div>
       <div class="panel-body">
+        <h3>Hour chart</h3>
+        <% done, current, total = project.progress %>
+        <%= pie_chart({"Completed" => done, "Ongoing" => current, "Backlog" => (total-done-current)})  %>
         <%= time_ago_in_words(project.created_at, include_seconds: true) %> ago
       </div>
     </div>
