@@ -1,9 +1,9 @@
 <div class="container">
 <div class="pageheader">
-  <h1>Listing notifications</h1>
-  <%= link_to "Clear All" ,clear_all_path, remote: true, class: 'btn btn-danger' %>
+  <h1>Listing unseen notifications</h1>
 </div>
 <% if current_user.unseen_notifs.any? %>
+  <%= link_to "Clear All" ,clear_all_path, remote: true, class: 'btn btn-danger' %>
   <ul>
   <% current_user.unseen_notifs.each do |notif| %>
     <li class="notif-link"><%= render_activity notif.get_activity %></li>
@@ -12,4 +12,11 @@
 <% else %>
   <p>No new notifications..</p>
 <% end %>
+
+<h1>Listing old notifications</h1>
+  <ul>
+  <% current_user.seen_notifs.each do |notif| %>
+    <li class="notif-link"><%= render_activity notif.get_activity %></li>
+  <% end %>
+  </ul>
 </div>
