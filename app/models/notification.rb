@@ -28,14 +28,14 @@ class Notification < ActiveRecord::Base
 				return true
 			 
 			when 'admin'
-				if ['Sprint', 'Story', 'Bug', 'Task', 'Comment'].include? resource.class.to_s
+				if ['Sprint', 'Story', 'Bug', 'Task', 'Comment', 'Upload'].include? resource.class.to_s
 					return true
 				else
 					return false
 				end
 			
 			when 'developer'
-				if ['Story', 'Comment', 'Bug', 'Task'].include? resource.class.to_s 
+				if ['Story', 'Comment', 'Bug', 'Task', 'Upload'].include? resource.class.to_s 
 					return true
 				else
 					return false
@@ -65,7 +65,7 @@ class Notification < ActiveRecord::Base
 		case resource.class.to_s 
 			when 'Project'
 				return resource.users.uniq
-			when 'Sprint', 'Story'
+			when 'Sprint', 'Story', 'Upload'
 				return resource.project.users.uniq - superadmins
 			when 'Comment'
 				if resource.owner_type == 'Bug'
@@ -82,7 +82,7 @@ class Notification < ActiveRecord::Base
 		case resource.class.to_s 
 			when 'Project'
 				return resource
-			when 'Sprint', 'Story'
+			when 'Sprint', 'Story', 'Upload'
 				return resource.project
 			when 'Task', 'Bug'
 				return resource.story.project

@@ -1,0 +1,7 @@
+<% if activity.trackable %> 
+  <%= link_to  project_path(activity.trackable.project) do %> 
+<span class="activity-owner"><%=activity.owner.email %></span> uploaded <%= activity.trackable.name %> to project - <%=activity.trackable.project.name%>
+  <% end %>
+<% else %>
+  <span class="activity-owner"><%=activity.owner.email %></span> uploaded a resouce to project <%= activity.trackable.project.name %> which has since been removed.
+<% end %>
