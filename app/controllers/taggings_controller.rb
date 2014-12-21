@@ -25,16 +25,17 @@ class TaggingsController < ApplicationController
   # POST /taggings.json
   def create
     @tagging = Tagging.new
-    tag_name = params[:name].downcase
+    tag_name = params[:tag].downcase
     @tag = Tag.find_by_name tag_name
     if @tag == nil
       @tag = Tag.create(name: tag_name)
     end
     @tagging.tag_id = @tag.id
-    @tagging.hours 
+    @tagging.duration = params[:duration]
+    @tagging.user_id = current_user.id
     respond_to do |format|
       if @tagging.save
-        format.html { redirect_to @tagging, notice: 'Tagging was successfully created.' }
+        format.html { redirect_to analytics_path, notice: 'Tagging was successfully created.' }
         format.json { render :show, status: :created, location: @tagging }
       else
         format.html { render :new }
