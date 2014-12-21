@@ -33,9 +33,7 @@ class Story < ActiveRecord::Base
     total = self.tasks.map(&:estimated_time).reduce(:+).to_f
     current = self.tasks.where(state: 'In Progress').map(&:estimated_time).reduce(:+).to_f
     done = self.tasks.where(state: 'Done').map(&:estimated_time).reduce(:+).to_f
-    progress = done / total
-    current = current / total
-    return progress*100, current*100
+    return done, current, total
   end
 
 	 def update_status
