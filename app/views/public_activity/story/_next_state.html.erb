@@ -1,7 +1,7 @@
 <% if activity.trackable %> 
    <%= link_to project_story_path(id:  activity.trackable_id, project_id: activity.recipient_id) do %> 
- <span class="activity-owner"><%=activity.owner.name %></span> changed state of story - <%=activity.trackable.name%> to <%=activity.trackable.state%>.
+ <span class="activity-owner"><%=activity.owner.email %></span> changed state of story - <%=activity.trackable.name%> to <%=activity.trackable.state%>.
    <% end %>
 <% else %>
-<span class="activity-owner"><%=activity.owner.name %></span> changed state of a story which has since been removed.
+<span class="activity-owner"><%=activity.owner.email %></span> changed state of a story which has since been removed.
 <% end %>
