@@ -17,8 +17,10 @@
         </div>
         <div class="clearfix"></div>
       </div>
-      <div class="progress">
-        <div class="progress-bar progress-bar-success" style="width: 60%;">
+     <div class="progress">
+        <% completed_stories = project.stories.where(state: 'Accepted').count.to_f %>
+         <% total_stories = project.stories.count.to_f %>
+        <div data-toggle="tooltip" title="<%= completed_stories.to_i %>" class="progress-bar progress-bar-success" style="width: <%= (completed_stories/total_stories)*100 %>%;">
         </div>
       </div>
       <div class="panel-body">
