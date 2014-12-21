@@ -5,12 +5,41 @@
       <%= @project.name.slice(0,1).capitalize + @project.name.slice(1..-1) %>
       <%= link_to 'Edit', edit_project_path(id: params[:id]), class: "btn btn-warning" %> 
       <%= link_to 'Back', projects_path , class: "btn btn-danger" %>
-      <%= link_to "Add story to backlog", new_project_story_path(project_id: params[:id]),class: "btn btn-primary pull-right" %>
+      <span class="pull-right">
+        <%= link_to 'Add People', resource_project_path, class: "btn btn-primary" %>
+        <%= link_to "Add story to backlog", new_project_story_path(project_id: params[:id]),class: "btn btn-primary" %>
+      </span>
+        Total:<span class="badge text-info"><%= @project.stories.count %></span>
+        Backlogs:<span class="badge text-info"><%= @project.backlog_stories.count %></span>
+        Completed:<span class="badge text-info"><%= @project.completed_stories.count %></span>
       </h3>
     </div>
     <div class="row">
-      <% if @project.stories.any? %>
-        <% @project.stories.each do |story| %>
+      <h4>Backlogs</h4>
+      <% if @project.backlog_stories.any? %>
+        <% @project.backlog_stories.each do |story| %>
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <div class="row container">
+                <span class="text-info">
+                  <%= link_to story.name, project_story_tasks_path(story_id: story.id,project_id: story.project_id) %>
+                  <%= link_to "Edit", edit_project_story_path(project_id: story.project_id, id: story.id),class: "btn btn-warning" %>
+                  <%= link_to "Delete", project_story_path(project_id: story.project_id, id: story.id), :method => :delete, class: "btn btn-danger",data: { confirm: 'Are you sure?' } %>
+                </span>
+                <span class="pull-right">
+                  Due Date: <%= story.due_date %>
+                </span>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% else %>
+      <% end %>
+    </div>
+    <div class="row">
+      <% if @project.rest_stories.any? %>
+      <h4>Others</h4>
+        <% @project.rest_stories.each do |story| %>
           <div class="panel panel-default">
             <div class="panel-heading">
               <div class="row container">

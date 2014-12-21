@@ -22,6 +22,7 @@ class StoriesController < ApplicationController
   # GET /stories/1/edit
   def edit
     @project = Project.find(params[:project_id])
+    @story = Story.find params[:id]
   end
 
   # POST /stories
@@ -61,7 +62,7 @@ class StoriesController < ApplicationController
   def destroy
     @story.destroy
     respond_to do |format|
-      format.html { redirect_to stories_url, notice: 'Story was successfully destroyed.' }
+      format.html { redirect_to project_path(id: @story.project_id), notice: 'Story was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
