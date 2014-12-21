@@ -1,44 +1,33 @@
 <div class="row">
   <div class="container">
-    <div class="page-header">
-      <h1>Projects</h1>
-    </div>
-    <div class="menubar">
-      <div class="container">
-        <%= link_to 'New project', new_project_path , :class => "btn btn-primary pull-right"%>
-      </div>
-    </div>
-    <div class="clearfix"></div>
-    <% if @projects.any? %> 
-      <div class="projects">
-      <% @projects.each do |project| %>
-      <div class="col-md-4 project">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <div class="panel-title pull-left">
-              <h3><%= link_to project.name, project %></h3>
-            </div>
-            <div class="pull-right">
-                <%= link_to 'Edit', edit_project_path(project), :class => "btn-sm btn btn-warning" %>
-                <%= link_to 'Destroy', project, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn-sm btn btn-danger" %>
-            </div>
-            <div class="clearfix"></div>
-          </div>
-          <div class="progress">
-            <div class="progress-bar progress-bar-success" style="width: 60%;">
-            </div>
-          </div>
-          <div class="panel-body">
-            <%= time_ago_in_words(project.created_at, include_seconds: true) %> ago
-          </div>
-        </div>
-      </div>
+    <ul class="nav nav-tabs" id="dashboardTab">
+      <% if current_user.has_role? :super_admin or current_user.isRole :admin %>
+        <li class="active" data-toggle="tab"><a href="#admin">Projects</a></li>
+      <% end %>
+      <% if current_user.isRole :developer %>
+        <li><a href="#developer" data-toggle="tab">Developer</a></li>
+      <% end %>
+      <% if current_user.isRole :client %>
+        <li><a href="#client" data-toggle="tab">Client</a></li>
+      <% end %>
+    </ul>
+
+    <div class="tab-content" id="dashboardTabContent">
+      <div class="tab-pane active" id="admin">
+      <% if current_user.isRole :super_admin or current_user.isRole :admin %>
+        <%= render 'super_admin_dashboard' %>
       <% end %>
       </div>
-    <% else %>
-      <div class="row">
-        <p class="text-warning">Sorry, no projects to show</p>
+      <div class="tab-pane" id="developer">
+        <% if current_user.isRole :developer %>
+          <%= render 'developer_dashboard' %>
+        <% end %>
       </div>
-    <% end %>  
+      <div class="tab-pane" id="client">
+        <% if current_user.isRole :client %>
+          <%= render 'client_projects' %>
+        <% end %>
+      </div>
+    </div>
   </div>
 </div>

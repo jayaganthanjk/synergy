@@ -59,7 +59,16 @@ class StoriesController < ApplicationController
     end
   end
 
-   def next_state
+  def accept
+    story = Story.find(params[:id])
+    respond_to do |format|
+      if story.deliver
+        format.html { redirect_to completedstories_project_path(id: story.project_id), notice: 'Accepted story' }
+      end
+    end
+  end
+  
+  def next_state
     story = Story.find(params[:id])
     story.next_state(params[:state])
     activity = story.create_activity :next_state, owner: current_user, recipient: Project.find(story.project_id)

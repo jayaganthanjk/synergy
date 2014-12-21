@@ -1,0 +1,27 @@
+<div class="page-header">
+  <h1>Projects</h1>
+</div>
+<div class="clearfix"></div>
+<% if Project.with_role(:client,current_user).any? %> 
+  <div class="projects">
+  <% Project.with_role(:client,current_user).each do |project| %>
+      <div class="col-md-4 project">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <div class="panel-title pull-left">
+              <h3><%= link_to project.name, completedstories_project_path(project) %></h3>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+          <div class="progress">
+            <div class="progress-bar progress-bar-success" style="width: 60%;">
+            </div>
+          </div>
+          <div class="panel-body">
+            <%= time_ago_in_words(project.created_at, include_seconds: true) %> ago
+          </div>
+        </div>
+      </div>
+  <% end %>
+  </div>
+<% end %>  

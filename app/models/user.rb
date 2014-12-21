@@ -19,6 +19,14 @@ class User < ActiveRecord::Base
     Project.all.select { |project| self.can? :read, project }
   end
 
+  def isRole role
+    if self.roles.find_by_name role
+      return true
+    else
+      return false
+    end
+  end
+
   def ability
     @ability ||= Ability.new(self)
   end

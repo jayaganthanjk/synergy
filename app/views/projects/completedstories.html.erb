@@ -1,0 +1,41 @@
+<div class="row">
+  <div class="container">
+    <% if @stories.any? %>
+      <h3>Completed Stories</h3>
+      <% @stories.each do |story| %>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <div class="panel-title">
+              <%= story.name %>
+            </div>
+          </div>
+          <div class="panel-content">
+            <div class="row">
+              <div class="container">
+                <div class="col-md-2">
+                  <%= link_to "Accept Story", accept_project_story_path(project_id: story.project_id, id: story.id), class: "btn btn-success" %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% else %>
+      <p>No completed stories yet!</p>
+    <% end %>
+    <div class="row">
+      <% if @delivered_stories.any? %>
+      <h3>Delivered Stories</h3>
+      <% @delivered_stories.each do |story| %>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <div class="panel-title">
+              <p class="text-success"><%= story.name %></p>
+            </div>
+          </div>
+        </div>
+      <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>

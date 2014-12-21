@@ -74,10 +74,15 @@ class ProjectsController < ApplicationController
     role = role.to_sym
     respond_to do |format|
       if @user.add_role(role,@project)
-        UserMailer.assinged_role(@user, @project, params[:role], current_user).deliver
+        UserMailer.assinged_role(@user, @project, role, current_user).deliver
         format.html { redirect_to resource_project_path(@project), notice: 'successfully assinged user with role to this project'}
       end 
     end
+  end
+
+  def completedstories
+    @stories = Project.find(params[:id]).stories.where(state: 'Accepted' )
+    @delivered_stories = Project.find(params[:id]).stories.where(state: 'Delivered' )
   end
 
   private
