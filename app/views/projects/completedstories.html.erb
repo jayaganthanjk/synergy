@@ -15,6 +15,24 @@
                 <div class="col-md-2">
                   <%= link_to "Accept Story", accept_project_story_path(project_id: story.project_id, id: story.id), class: "btn btn-success" %>
                 </div>
+                <div class="col-md-2">
+                 <% if story.bugs.any? %>
+                    <h2>Bugs</h2>
+                      <% story.bugs.each do |bug| %>
+                        <%= bug.content %><br>
+                         <% if bug.comments.any? %>
+                        <h2>Bug Comments : </h2>
+                         <% bug.comments.each do |comment| %>
+                           <%= comment.user.email %> :  <%= comment.content %><br>
+                         <% end %>
+                        <% end %>
+                        <div class="container">
+                          <%= render 'comments/bug_comment', bug_id: bug.id %>
+                        </div>
+                      <% end %>
+                    <% end %>
+                    <%= link_to 'add bug', new_bug_path(story_id: story.id) %>
+                </div>
               </div>
             </div>
           </div>

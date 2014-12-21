@@ -11,12 +11,12 @@ class CommentsController < ApplicationController
           activity = @comment.create_activity :create, owner: current_user, recipient: Project.find(@comment.owner.project_id)
           @notif = Notification.new
           @notif.notifs_create(@comment, activity.id) 
-          format.html { redirect_to project_story_tasks_path(project_id: @owner.project_id, story_id: @owner.id), notice: 'Comment was successfully created.' }
+          format.html { redirect_to :back, notice: 'Comment was successfully created.' }
         else
           activity = @comment.create_activity :create, owner: current_user, recipient: Project.find(@comment.owner.story.project_id)
           @notif = Notification.new
           @notif.notifs_create(@comment, activity.id) 
-          format.html { redirect_to project_story_tasks_path(project_id: @owner.story.project_id, story_id: @owner.story.id), notice: 'Comment was successfully created.' }
+          format.html { redirect_to :back, notice: 'Comment was successfully created.' }
         end
         format.json { render :show, status: :created, location: @comment }
       else
@@ -33,7 +33,7 @@ class CommentsController < ApplicationController
   def destroy
     @comment.destroy
     respond_to do |format|
-      format.html { redirect_to comments_url, notice: 'Comment was successfully destroyed.' }
+      format.html { redirect_to :back, notice: 'Comment was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
