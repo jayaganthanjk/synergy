@@ -24,6 +24,7 @@ Rails.application.routes.draw do
                                       
   get '/search', to: 'searches#index'
   get '/findUsers', to: 'home#findUsers'
+  post '/changestorystate', to: 'stories#next_state'
   root to: 'projects#index'
 
 end
