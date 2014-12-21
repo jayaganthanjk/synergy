@@ -81,8 +81,8 @@ class ProjectsController < ApplicationController
   end
 
   def completedstories
-    @stories = Project.find(params[:id]).stories.where(state: 'Accepted' )
-    @delivered_stories = Project.find(params[:id]).stories.where(state: 'Delivered' )
+    @stories = Project.find(params[:id]).stories.where(state: 'Delivered' )
+    @delivered_stories = Project.find(params[:id]).stories.where(state: 'Accepted' )
   end
 
   private

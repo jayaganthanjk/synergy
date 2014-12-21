@@ -21,11 +21,14 @@ Rails.application.routes.draw do
 
   resources :comments
 
+  resources :taggings
+
   resources :uploads
 
   devise_for :users, :controllers => {:registrations => "registrations",
                                       :invitations => "invitations" }
-                                      
+    
+  get '/analytics', to: 'home#analytics'                                    
   get '/search', to: 'searches#index'
   get '/findUsers', to: 'home#findUsers'
   post '/changestorystate', to: 'stories#next_state'
