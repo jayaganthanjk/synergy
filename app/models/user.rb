@@ -15,6 +15,7 @@ class User < ActiveRecord::Base
   has_many :bugs
   has_many :uploads
   has_many :taggings
+  has_many :tasks
 
   def projects
     Project.all.select { |project| self.can? :read, project }
@@ -26,6 +27,14 @@ class User < ActiveRecord::Base
     else
       return false
     end
+  end
+
+  def undone_tasks 
+    self.tasks.where.not(state: 'Done')
+  end
+
+  def done_tasks
+    self.tasks.where(state: 'Done')
   end
 
   def ability

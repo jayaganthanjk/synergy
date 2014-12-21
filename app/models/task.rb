@@ -2,6 +2,7 @@ class Task < ActiveRecord::Base
 	validates_presence_of :name
 	belongs_to :project
 	belongs_to :story
+  belongs_to :user
 	has_many :timelogs
 	include PublicActivity::Model
 
