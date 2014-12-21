@@ -7,4 +7,5 @@ FactoryGirl.define do
 		archive false
   end
 
+
 end

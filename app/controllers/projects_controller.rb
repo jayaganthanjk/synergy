@@ -64,6 +64,7 @@ class ProjectsController < ApplicationController
   end
 
   def resource
+    @project = Project.find params[:id]
   end
 
   def addUser

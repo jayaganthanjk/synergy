@@ -13,5 +13,26 @@
         <%= submit_tag("Add Role",{class: "btn btn-primary"}) %>
       <% end %>
     </div>
+
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <% if @project.users.any? %>
+      <% @project.users.each do |user|%>
+        <div class="col-md-4">
+          <h4 class="text-info"><%= user.email %></h4>
+          <div class="row">
+            <% @project.project_user_roles(user).each do |role| %>
+              <div class="col-md-4">
+                <p><%= role.name %></p>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    <% else %>
+      <p>No users in the project. If u are the super-admin add roles to the project!</p>
+    <% end %> 
   </div>
 </div>

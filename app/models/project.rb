@@ -28,4 +28,9 @@ class Project < ActiveRecord::Base
 	def completed_stories
 		self.stories.where(state: "Delivered")
 	end
+
+	def project_user_roles user
+    user.roles.where(:resource_id => self.id)
+  end
+
 end
