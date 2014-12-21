@@ -17,6 +17,8 @@ class BugsController < ApplicationController
     respond_to do |format|
       if @bug.save
         activity = @bug.create_activity :create, owner: current_user, recipient: Project.find(@bug.story.project_id)
+        @notif = Notification.new
+        @notif.notifs_create(@bug, activity.id) 
         format.html { redirect_to project_story_tasks_path(project_id: @bug.story.project_id, story_id: @bug.story_id), notice: 'Bug was successfully created.' }
         format.json { render :show, status: :created, location: @bug }
       else

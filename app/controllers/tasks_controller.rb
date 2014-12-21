@@ -36,6 +36,7 @@ class TasksController < ApplicationController
     respond_to do |format|
       if @task.save
         activity = @task.create_activity :create, owner: current_user, recipient: Project.find(@task.project_id)
+        
         format.html { redirect_to project_story_tasks_path(project_id: @task.project_id, story_id: @task.story_id), notice: 'Task was successfully created.' }
         format.json { render :show, status: :created, location: @task }
       else
@@ -57,6 +58,44 @@ class TasksController < ApplicationController
         format.json { render json: @task.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def change_state
+    task = Task.find(params[:task_id])
+    state = params[:state]
+    case state
+      when "Not Started" then task.not_started
+      when "In Progress" then task.start
+      when "Done" then task.development_done
+    end
+    render :text => state.to_json
+  end
+
+  def findusers
+    story = Story.find(params[:id])
+    users = story.project.users
+    returndata = ""
+    users.each do |user|
+      returndata = "#{user.email}:#{user.id},#{returndata}"
+    end
+    render :text => returndata.to_json
+  end
+
+  def assigntask
+    task = Task.find(params[:task_id])
+    user = User.find(params[:user_id])
+    task.assign(user)
+    activity = task.create_activity :assign, owner: current_user, recipient: Project.find(Story.find(task.story_id).project_id)
+    @notif = Notification.new
+    @notif.notifs_create(task, activity.id)
+    render :text => user.email.to_json
+  end
+
+  def change_due_date
+    returndata = params[:due_date]
+    task = Task.find(params[:story_id])
+    task.update_attributes(:due_date => params[:due_date])
+    render :text => params[:story_id].to_json
   end
 
   # DELETE /tasks/1

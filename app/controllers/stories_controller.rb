@@ -33,6 +33,8 @@ class StoriesController < ApplicationController
     respond_to do |format|
       if @story.save
         activity = @story.create_activity :create, owner: current_user, recipient: Project.find(@story.project_id)
+        @notif = Notification.new
+        @notif.notifs_create(@story, activity.id) 
         format.html { redirect_to  project_path(id: @story.project_id), notice: 'Story was successfully created.' }
         format.json { render :show, status: :created, location: @story }
       else
@@ -54,6 +56,42 @@ class StoriesController < ApplicationController
         format.json { render json: @story.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+   def next_state
+    story = Story.find(params[:id])
+    story.next_state(params[:state])
+    activity = story.create_activity :next_state, owner: current_user, recipient: Project.find(story.project_id)
+    @notif = Notification.new
+    @notif.notifs_create(story, activity.id)
+    render :text => story.state.to_json
+  end
+
+  def accept_story
+    story = Story.find(params[:id])
+    story.accepted
+    story[:description] = params[:description]
+    story.save
+    flash[:notice] = "Story Accepted!"
+    redirect_to :back
+  end
+
+  def get_tasks_progress
+    returndata = 1
+    taskslist = Story.find(params[:story_id]).tasks
+    estimatedTime = 0
+    completedTime = 0
+    notStartedTime = 0
+    taskslist.each do |task|
+      if task.state == "Done"
+        completedTime = completedTime + task.estimated_time
+      elsif task.state == "Not Started"
+        notStartedTime = notStartedTime + task.estimated_time
+      end 
+      estimatedTime = estimatedTime + task.estimated_time
+    end
+    inProgressTime = estimatedTime -  (completedTime + notStartedTime)
+    render :text => "#{estimatedTime},#{completedTime},#{inProgressTime}".to_json
   end
 
   # DELETE /stories/1

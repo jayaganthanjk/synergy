@@ -46,4 +46,14 @@ class Story < ActiveRecord::Base
     end
   end
 
+  def next_state(current_state)
+    case current_state
+      when "Not Started" then not_started
+      when "In Progress" then start
+      when "Delivered" then deliver
+      when "Accepted" then accept
+      when "Rejected" then reject
+    end
+  end
+
 end

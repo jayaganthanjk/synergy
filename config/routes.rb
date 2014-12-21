@@ -14,7 +14,8 @@ Rails.application.routes.draw do
   resources :comments
 
 
-  devise_for :users
+  devise_for :users, :controllers => {:registrations => "registrations",
+                                      :invitations => "invitations" }
   get '/search', to: 'searches#index'
 
   root to: 'projects#index'

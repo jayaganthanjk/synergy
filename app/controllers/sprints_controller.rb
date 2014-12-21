@@ -30,6 +30,8 @@ class SprintsController < ApplicationController
     respond_to do |format|
       if @sprint.save
         activity = @sprint.create_activity :create, owner: current_user, recipient: Project.find(@sprint.project_id)
+        @notif = Notification.new
+        @notif.notifs_create(@sprint, activity.id) 
         format.html { redirect_to @sprint, notice: 'Sprint was successfully created.' }
         format.json { render :show, status: :created, location: @sprint }
       else

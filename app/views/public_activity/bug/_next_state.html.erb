@@ -1,7 +1,7 @@
 <% if activity.trackable %> 
-  <%= link_to project_story_path(id:  activity.trackable.story_id, project_id: activity.trackable.story.project.id)  do %> 
-<span class="activity-owner"><%=activity.owner.name %></span> changed state of bug - <%=activity.trackable.desc%> to <%=activity.trackable.state%>.
+  <%= link_to project_story_tasks_path(project_id: activity.trackable.story.project_id, story_id: activity.trackable.story_id)  do %> 
+<span class="activity-owner"><%=activity.owner.email %></span> changed state of bug - <%=activity.trackable.desc%> to <%=activity.trackable.state%>.
   <% end %>
 <% else %>
-  <span class="activity-owner"><%=activity.owner.name %></span> changed state of a bug which has since been removed.
+  <span class="activity-owner"><%=activity.owner.email %></span> changed state of a bug which has since been removed.
 <% end %>
