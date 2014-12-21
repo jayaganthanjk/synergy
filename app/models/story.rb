@@ -29,6 +29,14 @@ class Story < ActiveRecord::Base
 		where("name like ?", "%#{query}%") 
 	end
 
+  def progress
+    total = self.tasks.map(&:estimated_time).reduce(:+).to_f
+    current = self.tasks.where(state: 'In Progress').map(&:estimated_time).reduce(:+).to_f
+    done = self.tasks.where(state: 'Done').map(&:estimated_time).reduce(:+).to_f
+    progress = done / total
+    current = current / total
+    return progress*100, current*100
+  end
 	 def update_status
     tasks_statuses = self.tasks.map(&:state)
     tasks_statuses = tasks_statuses.uniq

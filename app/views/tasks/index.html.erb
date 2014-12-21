@@ -3,15 +3,7 @@
     <h1>Listing tasks <%= link_to 'New Task', new_project_story_task_path, :class=>"btn btn-primary pull-right" %></h1>
     <% if @tasks.any? %>
     	<% @tasks.each do |task| %>
-      	  <div class="panel panel-default">
-        	<div class="panel-heading">
-	          <div class="row container">
-	            <%= task.name %>
-	            <%= link_to 'Edit', edit_project_story_task_path(project_id: task.project_id, story_id: task.story_id,id: task.id), :class => "btn btn-warning" %>
-	            <%= link_to 'Destroy', project_story_task_path(project_id: task.project_id,story_id: task.story_id,id: task.id), method: :delete, :class => "btn btn-danger",data: { confirm: 'Are you sure?' } %>
-	          </div>
-	        </div>
-	      </div>      
+    		<%= render 'task', task: task %>
 	    <% end %>
 	<% else %>
 		<p>No Tasks yet</p>

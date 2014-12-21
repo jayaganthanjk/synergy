@@ -16,9 +16,10 @@
     </div>
   </div>
   <div class="progress">
-    <div class="progress-bar progress-bar-success" data-toggle="tooltip" title="10" style="width: 0%"></div>
-    <div class="progress-bar progress-bar-warning" data-toggle="tooltip" title="5" style="width: 0%"></div>
-    <div class="progress-bar progress-bar-danger" data-toggle="tooltip" title="4" style="width: 0%"></div>
+    <% progress, current = story.progress %>
+    <div class="progress-bar progress-bar-success" data-toggle="tooltip" title="<%= story.tasks.where(state: 'Done').count %>" style="width: <%= progress %>%"></div>
+    <div class="progress-bar progress-bar-warning" data-toggle="tooltip" title="<%= story.tasks.where(state: 'In Progress').count %>" style="width: <%= current %>%"></div>
+    <div class="progress-bar progress-bar-danger" data-toggle="tooltip" title="<%= story.tasks.where(state: 'Not Started').count %>" style="width: <%= 100-progress-current%>%"></div>
   </div>
   <div class="panel-body"></div>
 </div>
