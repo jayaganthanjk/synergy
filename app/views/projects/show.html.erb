@@ -1,4 +1,4 @@
-<div class="row">
+<div class="container">
   <div class="container">
     <div class="row">
       <h3>
@@ -22,22 +22,32 @@
           <div class="panel panel-default">
             <div class="panel-heading">
               <div class="row container">
-                <span class="text-info">
-                  <%= link_to story.name, project_story_tasks_path(story_id: story.id,project_id: story.project_id) %>
+              <div class="label state-<%= story.state.parameterize %>"><%= story.state %></div>
+                <div class="text-info">
+                  <%= link_to story.name.capitalize, project_story_tasks_path(story_id: story.id,project_id: story.project_id) %>
                   <%= link_to "Edit", edit_project_story_path(project_id: story.project_id, id: story.id),class: "btn btn-warning" %>
                   <%= link_to "Delete", project_story_path(project_id: story.project_id, id: story.id), :method => :delete, class: "btn btn-danger",data: { confirm: 'Are you sure?' } %>
-                </span>
-                <span class="pull-right">
-                  Due Date: <%= story.due_date %>
-                </span>
+                </div>
+                Completed <span class="badge">10</span>
+                Pending <span class="badge">5</span>
+                In Progress <span class="badge">4</span>
+                <div class="pull-right">
+                  <span class="label label-default">Due Date: <%= story.due_date.strftime("%d-%m-%Y") %></span>
+                </div>
               </div>
             </div>
+            <div class="progress">
+              <div class="progress-bar progress-bar-success" data-toggle="tooltip" title="10" style="width: 35%"></div>
+              <div class="progress-bar progress-bar-warning" data-toggle="tooltip" title="5" style="width: 20%"></div>
+              <div class="progress-bar progress-bar-danger" data-toggle="tooltip" title="4" style="width: 45%"></div>
+            </div>
+            <div class="panel-body"></div>
           </div>
         <% end %>
       <% else %>
       <% end %>
     </div>
-    <div class="row">
+    <div class="row story">
       <% if @project.rest_stories.any? %>
       <h4>Others</h4>
         <% @project.rest_stories.each do |story| %>
@@ -48,47 +58,75 @@
                 <div class="text-info">
                   <%= link_to story.name.capitalize, project_story_tasks_path(story_id: story.id,project_id: story.project_id) %>
                   <%= link_to "Edit", edit_project_story_path(project_id: story.project_id, id: story.id),class: "btn btn-warning" %>
+                  <%= link_to "Delete", project_story_path(project_id: story.project_id, id: story.id), :method => :delete, class: "btn btn-danger",data: { confirm: 'Are you sure?' } %>
                 </div>
-                Completed <span class="badge"><%= story.tasks.where(state: 'Done').count %></span>
-                Pending <span class="badge"><%= story.tasks.where(state: 'Not Started').count %></span>
-                In Progress <span class="badge"><%= story.tasks.where(state: 'In Progress').count %></span>
+                Completed <span class="badge">10</span>
+                Pending <span class="badge">5</span>
+                In Progress <span class="badge">4</span>
                 <div class="pull-right">
                   <span class="label label-default">Due Date: <%= story.due_date.strftime("%d-%m-%Y") %></span>
                 </div>
               </div>
             </div>
             <div class="progress">
-              <div class="progress-bar progress-bar-success" data-toggle="tooltip" title="<%= story.tasks.where(state: 'Done').count %>" style="width: 35%"></div>
-              <div class="progress-bar progress-bar-warning" data-toggle="tooltip" title="<%= story.tasks.where(state: 'Not Started').count %>" style="width: 20%"></div>
-              <div class="progress-bar progress-bar-danger" data-toggle="tooltip" title="<%= story.tasks.where(state: 'In Progress').count %>" style="width: 45%"></div>
+              <div class="progress-bar progress-bar-success" data-toggle="tooltip" title="10" style="width: 35%"></div>
+              <div class="progress-bar progress-bar-warning" data-toggle="tooltip" title="5" style="width: 20%"></div>
+              <div class="progress-bar progress-bar-danger" data-toggle="tooltip" title="4" style="width: 45%"></div>
             </div>
             <div class="panel-body"></div>
           </div>
+        </div>
         <% end %>
       <% else %>
       <% end %>
+        <div class="row container">
+            <div class="col-md-4">
+            <h2>Add new upload</h2>
+            <%= form_for Upload.new, html: { multipart: true } do |f| %>
+              <div class="form-group">
+                <%= f.label :name  %> 
+                <%= f.text_field :name , :class => "form-control" %>
+              </div>
+              <%= f.hidden_field :user_id, value: @current_user.id %>
+              <%= f.hidden_field :project_id, value: @project.id %>
+              <div class="form-group">
+                <%= f.label :link , "File"%> 
+                <%= f.file_field :link , :class => "form-control" %>
+              </div>
+              <div class="form-group">
+                <%= f.label :remote_link_url, "Or paste file URL" %> 
+                <%= f.text_field :remote_link_url , :class => "form-control" %>
+              </div>
+              <%= f.submit "Upload" ,class: 'btn btn-primary' %>
+            <% end %>
+            </div>
+              <div class="col-md-8">
+              <h2>Project Uploads</h2>
+              <% if @project.uploads.any? %>
+              <table class="table">
+                <thead>
+                  <th>Filename</th>
+                  <th>Links</th>
+                </thead>
+                <tbody>
+                <% @project.uploads.each do |upload| %>
+                  <tr>
+                  <td>
+                  <%= upload.name %>
+                  </td>
+                  <td>
+                  <%= link_to upload.link_url do %> 
+                    <button class="btn btn-danger">download</button><br>
+                  <% end %>
+                  </td>
+                  </tr>
+                <% end %>
+                </tbody>
+                </table>
+              <% else %>
+                <p>No Uploads yet</p>
+              <% end %>
+            </div>
+        </div>
     </div>
-
-    <% if @project.uploads.any? %>
-      <% @project.uploads.each do |upload| %>
-      <%= upload.name %> |
-      <%= link_to upload.link_url do %> 
-        <button class="btn btn-danger">download</button><br>
-      <% end %><br>
-      <% end %>
-    <% end %>
-
-    <%= form_for Upload.new, html: { multipart: true } do |f| %>
-      <%= f.text_field :name, class: 'form-control' %>
-      <%= f.hidden_field :user_id, value: @current_user.id %>
-      <%= f.hidden_field :project_id, value: @project.id %>
-      <%= f.file_field :link %>
-      <p>
-        <%= f.label :remote_link_url, "OR paste upload URL" %><br/>
-        <%= f.text_field :remote_link_url, class: 'form-control' %>
-      </p>
-      <%= f.submit "submit upload" ,class: 'btn btn-primary' %>
-    <% end %>
-
-  </div>
 </div>
