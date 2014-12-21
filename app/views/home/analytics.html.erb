@@ -13,5 +13,30 @@
         <%= submit_tag("Add" , class: "btn btn-primary") %>
       <% end %>
     </div>
+    <div class="col-md-9">
+      <% data = current_user.taggings.group(:tag_id).sum(:duration) %>
+      <% data = data.map{ |k,v| [Tag.find(k).name,v] } %>
+      <%= pie_chart data %>
+    </div>
   </div>
 </div>
+<% if current_user.has_role? :super_admin %>
+  <div class="row">
+    <div class="container">
+      <div class="col-md-3">
+        <%= form_tag(useranalytics_path,method: 'post') do %>
+          <div class="form-group">
+            <%= label_tag(:email, "Email:") %>
+            <%= text_field_tag(:email,nil,{class:"form-control",autocomplete: 'off'}) %>
+          </div>
+          <div>
+            <%= submit_tag("Findanalytics",{class: "btn btn-primary"}) %>
+          </div>
+        <% end %>
+      </div>
+      <div class="col-md-9">
+        <%= pie_chart @user_data %>
+      </div>
+    </div>
+  </div>
+<% end %>
