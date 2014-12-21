@@ -13,6 +13,7 @@ class User < ActiveRecord::Base
   has_many :projects, through: :project_roles
   has_many :comments
   has_many :bugs
+  has_many :uploads
 
   def projects
     Project.all.select { |project| self.can? :read, project }

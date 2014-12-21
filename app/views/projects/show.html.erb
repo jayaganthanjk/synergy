@@ -38,5 +38,27 @@
       <% else %>
       <% end %>
     </div>
+
+    <% if @project.uploads.any? %>
+      <% @project.uploads.each do |upload| %>
+      <%= upload.name %> |
+      <%= link_to upload.link_url do %> 
+        <button class="btn btn-danger">download the upload</button><br>
+      <% end %><br>
+      <% end %>
+    <% end %>
+
+    <%= form_for Upload.new, html: { multipart: true } do |f| %>
+      <%= f.text_field :name, class: 'form-control' %>
+      <%= f.hidden_field :user_id, value: @current_user.id %>
+      <%= f.hidden_field :project_id, value: @project.id %>
+      <%= f.file_field :link %>
+      <p>
+        <%= f.label :remote_link_url, "OR paste upload URL" %><br/>
+        <%= f.text_field :remote_link_url, class: 'form-control' %>
+      </p>
+      <%= f.submit "submit upload" ,class: 'btn btn-primary' %>
+    <% end %>
+
   </div>
 </div>

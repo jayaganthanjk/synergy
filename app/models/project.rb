@@ -7,6 +7,7 @@ class Project < ActiveRecord::Base
 	has_many :stories
 	has_many :tasks
 	has_many :users , through: :roles
+	has_many :uploads
 
 	def self.search(query)
 		where("name like ?", "%#{query}%") 

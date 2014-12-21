@@ -13,6 +13,7 @@ Rails.application.routes.draw do
 
   resources :comments
 
+  resources :uploads
 
   devise_for :users, :controllers => {:registrations => "registrations",
                                       :invitations => "invitations" }
