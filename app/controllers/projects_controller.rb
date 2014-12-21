@@ -6,6 +6,7 @@ class ProjectsController < ApplicationController
   # GET /projects.json
   def index
     @projects = Project.order('created_at DESC')
+    @activities = PublicActivity::Activity.where(recipient: current_user).order('created_at desc')
   end
 
   # GET /projects/1

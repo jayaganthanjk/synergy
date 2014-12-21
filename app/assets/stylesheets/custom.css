@@ -18,3 +18,16 @@
 .story .text-info {
 	display: inline;
 }
+
+#activities .activity-owner {
+	color: #000;
+}
+
+#activities .activity {
+	position: relative;
+	display: block;
+	padding: 10px 15px;
+	margin-bottom: -1px;
+	background-color: #fff;
+	border: 1px solid #ddd;
+}

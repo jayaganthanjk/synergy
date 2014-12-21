@@ -1,8 +1,9 @@
 <div class="row">
   <div class="container">
     <ul class="nav nav-tabs" id="dashboardTab">
+        <li class="active" data-toggle="tab"><a href="#activities">Activities</a></li>
       <% if current_user.has_role? :super_admin or current_user.isRole :admin %>
-        <li class="active" data-toggle="tab"><a href="#admin">Projects</a></li>
+        <li data-toggle="tab"><a href="#admin">Projects</a></li>
       <% end %>
       <% if current_user.isRole :developer %>
         <li><a href="#developer" data-toggle="tab">Developer</a></li>
@@ -13,7 +14,10 @@
     </ul>
 
     <div class="tab-content" id="dashboardTabContent">
-      <div class="tab-pane active" id="admin">
+      <div class="tab-pane active" id="activities">
+        <%= render 'activities' , activities: @activities%>
+      </div>
+      <div class="tab-pane" id="admin">
       <% if current_user.isRole :super_admin or current_user.isRole :admin %>
         <%= render 'super_admin_dashboard' %>
       <% end %>
