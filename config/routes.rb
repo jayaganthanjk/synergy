@@ -31,5 +31,7 @@ Rails.application.routes.draw do
   post '/changestorystate', to: 'stories#next_state'
   post '/changetaskstate', to: 'tasks#change_state'
   root to: 'projects#index'
+  get '/notifications', to: 'notifications#index'
+  get '/clear_all', to: 'notifications#seen_all'
 
 end
