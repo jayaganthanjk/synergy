@@ -16,8 +16,9 @@ class HomeController < ApplicationController
     user = User.find_by_email(params[:email])
     data = user.taggings.group(:tag_id).sum(:duration)
     @user_data = data.map{ |k,v| [Tag.find(k).name,v] }
+    binding.pry
     respond_to do |format|
-      format.html { redirect_to analytics_path }
+      format.html { render 'analytics' }
     end
   end
 end
