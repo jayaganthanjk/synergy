@@ -45,11 +45,12 @@
           </div>
         <% end %>
       <% else %>
+        <p class="text-success">Yaay! No backlogs!</p>
       <% end %>
     </div>
     <div class="row story">
       <% if @project.rest_stories.any? %>
-      <h4>Others</h4>
+      <h4>Rest of the stories</h4>
         <% @project.rest_stories.each do |story| %>
           <div class="panel panel-default">
             <div class="panel-heading">
