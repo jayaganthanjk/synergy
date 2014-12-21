@@ -28,6 +28,11 @@ $(document).ready(function(){
 
   findUserMails();
 
+  $('#dashboardTab a').click(function (e) {
+    e.preventDefault();
+    $(this).tab('show') ;
+  })
+
   $('.typeahead').typeahead();
   $('.typeahead').typeahead('destroy');
   $('#email').typeahead({

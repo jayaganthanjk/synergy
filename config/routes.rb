@@ -7,8 +7,12 @@ Rails.application.routes.draw do
     member do
       get 'resource'
       post 'addUser'
+      get 'completedstories'
     end
     resources :stories do
+      member do
+        get 'accept'
+      end
       resources :tasks
     end
   end

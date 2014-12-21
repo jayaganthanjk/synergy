@@ -108,25 +108,25 @@ class Ability
 
 
     #abilities for tester
-    can [:read, :show], Project do |project|
-      Project.with_role(:tester, user).pluck(:id).include?(project.id)
+    can [:read, :show, :completedstories], Project do |project|
+      Project.with_role(:client, user).pluck(:id).include?(project.id)
     end
-    can [:read], Story do |story|
-      Project.with_role(:tester, user).pluck(:id).include?(story.project.id)
+    can [:read, :accept], Story do |story|
+      Project.with_role(:client, user).pluck(:id).include?(story.project.id)
     end
     can [:read], Sprint do |sprint|
-      Project.with_role(:tester, user).pluck(:id).include?(sprint.project.id)
+      Project.with_role(:client, user).pluck(:id).include?(sprint.project.id)
     end
     can [:manage], Comment do |comment|
       case comment.owner_type
         when 'Story'
-          Project.with_role(:tester, user).pluck(:id).include?(comment.owner.project.id)
+          Project.with_role(:client, user).pluck(:id).include?(comment.owner.project.id)
         when 'Bug'
-          Project.with_role(:tester, user).pluck(:id).include?(comment.owner.story.project.id)
+          Project.with_role(:client, user).pluck(:id).include?(comment.owner.story.project.id)
       end
     end
     can [:manage], Bug do |bug|
-      Project.with_role(:tester, user).pluck(:id).include?(bug.story.project.id)
+      Project.with_role(:client, user).pluck(:id).include?(bug.story.project.id)
     end
 
   end
