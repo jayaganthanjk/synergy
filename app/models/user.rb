@@ -14,6 +14,7 @@ class User < ActiveRecord::Base
   has_many :comments
   has_many :bugs
   has_many :uploads
+  has_many :taggings
 
   def projects
     Project.all.select { |project| self.can? :read, project }

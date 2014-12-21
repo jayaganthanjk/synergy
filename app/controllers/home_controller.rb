@@ -11,4 +11,13 @@ class HomeController < ApplicationController
   def analytics
     @tagging = Tagging.new
   end
+
+  def useranalytics
+    user = User.find_by_email(params[:email])
+    data = user.taggings.group(:tag_id).sum(:duration)
+    @user_data = data.map{ |k,v| [Tag.find(k).name,v] }
+    respond_to do |format|
+      format.html { redirect_to analytics_path }
+    end
+  end
 end
